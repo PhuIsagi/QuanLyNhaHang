@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Bếp - Danh sách món | PTT Team</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/kitchen.css">
+</head>
+<body>
+
+    <div class="bg-image-container"></div>
+
+    <div class="kitchen-header">
+        <div class="d-flex gap-3 align-items-center">
+            <i class="fas fa-fire-alt text-warning" style="font-size: 2rem;"></i>
+            <div class="fw-bold fs-4 text-white">KHU VỰC BẾP</div>
+        </div>
+
+        <div class="user-section text-white">
+            <span class="fw-bold me-2" id="user_fullname">Đầu Bếp</span>
+            <img src="https://cdn-icons-png.flaticon.com/512/3461/3461980.png" id="user_avatar" class="user-avatar" alt="Avatar">
+        </div>
+    </div>
+
+    <div class="kitchen-container">
+        <div class="col-waiting">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div class="fw-bold text-warning fs-5"> CHỜ NẤU (<span id="waiting_count">0</span>)</div>
+                <div class="tab-group">
+                    <button class="nav-tab-item active border-0" id="btn_mode_order" onclick="switchMode('order')">Đơn lẻ</button>
+                    <button class="nav-tab-item border-0" id="btn_mode_dish" onclick="switchMode('dish')">Gộp món</button>
+                </div>
+            </div>
+
+            <div class="task-list" id="waiting_list_container">
+                <div class="text-center mt-5 text-muted">
+                    <i class="fas fa-spinner fa-spin fa-2x mb-3"></i>
+                    <p>Đang tải dữ liệu món chờ...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-cooking">
+            <div class="mb-4 fw-bold text-success fs-5">ĐANG NẤU (<span id="cooking_count">0</span>)</div>
+
+            <div class="task-list" id="cooking_list_container">
+                <div class="text-center mt-5 text-muted">
+                    <i class="fas fa-spinner fa-spin fa-2x mb-3"></i>
+                    <p>Đang tải dữ liệu bếp...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button onclick="logout()" class="logout-btn border-0"><i class="fas fa-sign-out-alt"></i> Đăng xuất</button>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../JS/kitchen.js"></script>
+
+</body>
+</html>

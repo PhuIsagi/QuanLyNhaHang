@@ -1,0 +1,6 @@
+@QLNH_HostAddress = http://localhost:5101
+
+GET {{QLNH_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
