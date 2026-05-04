@@ -15,7 +15,7 @@
 
 ## Kiến Trúc Hệ Thống
 
-Hệ thống áp dụng kiến trúc 3 lớp phân tách trách nhiệm rõ ràng:
+Hệ thống áp dụng kiến trúc 3 lớp:
 1. **Presentation Layer (`Controllers`):** Chứa các Web API (RESTful), nhận và trả dữ liệu JSON.
 2. **Business Logic Layer (`BLL` / `Services`):** Xử lý quy tắc nghiệp vụ, tính toán doanh thu, giờ chờ món.
 3. **Data Access Layer (`DAL` / `Repositories`):** Tương tác trực tiếp với SQL Server.
