@@ -1,23 +1,17 @@
-# 🍽️ Hệ Thống Quản Lý Nhà Hàng (Web API)
+# Hệ Thống Quản Lý Nhà Hàng
 
-Đây là mã nguồn Đồ án cuối kỳ môn **Lập trình Cơ sở dữ liệu**. Dự án xây dựng một hệ thống Web API phục vụ quy trình quản lý nhà hàng thực tế, bao gồm: Quản lý bàn ăn, gọi món (Order), đồng bộ hóa với nhà bếp, thanh toán, và thống kê doanh thu.
+**Lập trình Cơ sở dữ liệu**. Dự án xây dựng một hệ thống Web API phục vụ quy trình quản lý nhà hàng thực tế, bao gồm: Quản lý bàn ăn, gọi món, đồng bộ hóa với nhà bếp, thanh toán, và thống kê doanh thu.
 
-Hệ thống được thiết kế theo **Kiến trúc 3 Lớp (3-Layer Architecture)** và tuân thủ các tiêu chuẩn của **RESTful API** với định dạng giao tiếp **JSON**.
-
----
-
-## 🛠️ Công Nghệ & Phiên Bản Phần Mềm Sử Dụng
-
-Dự án được phát triển và kiểm thử trên các môi trường phần mềm sau:
+## Công Nghệ & Phiên Bản Phần Mềm Sử Dụng
 
 * **IDE Phát triển:** Visual Studio 2022
 * **Nền tảng Backend:** .NET Core (C#)
-* **Hệ quản trị CSDL:** Microsoft SQL Server (2019 / 2022)
+* **Hệ quản trị CSDL:** Microsoft SQL Server (2019)
 * **Công nghệ Truy xuất Dữ liệu:**
   * **Entity Framework Core:** Áp dụng cho các thao tác CRUD cơ bản và tự động tạo Database bằng EF Migrations.
   * **ADO.NET (Mô hình phi kết nối):** Dùng `SqlDataAdapter` và `DataTable` để truy xuất dữ liệu lớn từ Stored Procedure phục vụ xuất báo cáo.
   * **LINQ:** Xử lý, truy vấn và ánh xạ dữ liệu thành các DTO.
-* **Frontend (Giao diện):** HTML5, CSS3, Bootstrap 5.0.2, jQuery (AJAX).
+* **Frontend (Giao diện):** HTML5, CSS3, Bootstrap 5.0.2, jQuery.
 
 ---
 
