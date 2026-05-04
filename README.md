@@ -13,36 +13,9 @@
   * **LINQ:** Xử lý, truy vấn và ánh xạ dữ liệu thành các DTO.
 * **Frontend (Giao diện):** HTML5, CSS3, Bootstrap 5.0.2, jQuery.
 
----
-
-## 🏗️ Kiến Trúc Hệ Thống
+## Kiến Trúc Hệ Thống
 
 Hệ thống áp dụng kiến trúc 3 lớp phân tách trách nhiệm rõ ràng:
 1. **Presentation Layer (`Controllers`):** Chứa các Web API (RESTful), nhận và trả dữ liệu JSON.
 2. **Business Logic Layer (`BLL` / `Services`):** Xử lý quy tắc nghiệp vụ, tính toán doanh thu, giờ chờ món.
 3. **Data Access Layer (`DAL` / `Repositories`):** Tương tác trực tiếp với SQL Server.
-
----
-
-## 🗄️ Lập Trình Cơ Sở Dữ Liệu (T-SQL)
-
-Các xử lý phức tạp được đẩy xuống tầng CSDL thông qua T-SQL nhằm tối ưu hóa hiệu suất, bao gồm:
-
-* **Stored Procedures & Transactions:**
-  * `sp_TaoDonHang`: Tạo đơn hàng và thêm chi tiết món (Dùng lệnh `MERGE`). Cấu hình bọc `BEGIN TRAN / COMMIT` an toàn.
-  * `sp_ThanhToanHoaDon`: Xử lý chốt hóa đơn, giải phóng bàn. Có bắt lỗi `ROLLBACK TRAN`.
-  * `sp_ThongKeDoanhThu` & `sp_DoanhThuTheoNhom`: Trích xuất số liệu biểu đồ.
-* **Views:**
-  * `vw_DanhSachMonBep`: Lọc danh sách món đang chờ/đang nấu cho màn hình Đầu bếp.
-  * `vw_Top10MonBanChay`: Thống kê xếp hạng món ăn.
-* **Functions:** * `fn_TinhPhutCho`: Hàm tính thời gian thực tế khách đã chờ món.
-* **Triggers:**
-  * `trg_ThongBaoMonXong`: Tự động kích hoạt khi Đầu bếp bấm "Xong", chèn log vào bảng thông báo cho Phục vụ.
-
----
-
-## 🚀 Hướng Dẫn Cài Đặt & Chạy Dự Án
-
-**Bước 1: Clone mã nguồn về máy**
-```bash
-git clone [https://github.com/Phulsagi/QuanLyNhaHang.git](https://github.com/Phulsagi/QuanLyNhaHang.git)
