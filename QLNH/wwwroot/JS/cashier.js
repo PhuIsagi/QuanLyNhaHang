@@ -35,6 +35,20 @@ $(document).ready(function () {
     }).fail(function () {
         console.error("Lỗi khi tải danh sách bàn.");
     });
+
+    // Bắt sự kiện chọn sao trong Modal Góp ý
+    $(document).on('click', '#starContainer i', function () {
+        const val = $(this).data('value');
+        $('#selectedStars').val(val);
+        // Cập nhật giao diện sao (tô màu sao được chọn)
+        $('#starContainer i').each(function (index) {
+            if (index < val) {
+                $(this).removeClass('far').addClass('fas');
+            } else {
+                $(this).removeClass('fas').addClass('far');
+            }
+        });
+    });
 });
 
 function calculateChange() {
@@ -129,23 +143,26 @@ function checkout() {
 
     const tienKhachDua = parseCurrency($('#customer_cash').val());
 
+    // Đã thêm tong_tien_hang để truyền xuống backend
     const postData = {
         ma_hoa_don: currentMaHoaDon,
         tong_thanh_toan: totalAmount,
+        tong_tien_hang: currentBillData.calculations.tam_tinh, // Lấp đầy cột Tổng tiền hàng
         tien_khach_dua: tienKhachDua,
         giam_gia: currentBillData.calculations.giam_gia,
         phuong_thuc: 'Tiền mặt'
     };
 
     $.ajax({
-        url: '/api/checkout',
+        url: '/api/checkout', // Đảm bảo URL này khớp với code C# của bạn
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(postData),
         success: function (response) {
             if (response.success) {
-                alert(`Thanh toán thành công! Bàn ${soBan} đã trống.`);
-                window.location.reload();
+                // Thành công -> Hiện Modal đánh giá thay vì reload trang
+                $('#feedback_bill_id').val(currentMaHoaDon); // Lưu ID hóa đơn để gửi góp ý
+                $('#feedbackModal').modal('show');
             } else {
                 alert('Lỗi thanh toán: ' + response.msg);
                 $('#btn_checkout_cash').prop('disabled', false);
@@ -157,6 +174,57 @@ function checkout() {
         }
     });
 }
+
+// --- CÁC HÀM XỬ LÝ MODAL GÓP Ý ---
+
+function addNote(text) {
+    const currentText = $('#txtNoiDungGopY').val();
+    if (currentText) {
+        $('#txtNoiDungGopY').val(currentText + " " + text);
+    } else {
+        $('#txtNoiDungGopY').val(text);
+    }
+}
+
+function skipFeedback() {
+    $('#feedbackModal').modal('hide');
+    // Bỏ qua đánh giá thì thông báo xong và reload lại trang
+    alert('Đã thanh toán thành công!');
+    window.location.reload();
+}
+
+function submitFeedback() {
+    const maHD = $('#feedback_bill_id').val();
+    if (!maHD) {
+        skipFeedback();
+        return;
+    }
+
+    const data = {
+        MaHoaDon: parseInt(maHD),
+        SoSaoDanhGia: parseInt($('#selectedStars').val()),
+        NoiDungGopY: $('#txtNoiDungGopY').val(),
+        TenKhachHang: "Khách hàng"
+    };
+
+    $.ajax({
+        url: '/api/gop-y',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(data),
+        success: function () {
+            $('#feedbackModal').modal('hide');
+            alert('Thanh toán và gửi đánh giá thành công! Cảm ơn bạn.');
+            window.location.reload();
+        },
+        error: function (xhr) {
+            $('#feedbackModal').modal('hide');
+            alert('Thanh toán thành công! (Hiện không thể gửi đánh giá).');
+            window.location.reload();
+        }
+    });
+}
+
 
 document.addEventListener("DOMContentLoaded", function () {
     fetch('/sidebar.html')

@@ -38,4 +38,6 @@ public partial class Hoadon
     public virtual ICollection<Phieugoi> Phieugois { get; set; } = new List<Phieugoi>();
 
     public virtual Banan? SoBanNavigation { get; set; }
+
+    public virtual ICollection<GopYKhachHang> GopYKhachHangs { get; set; } = new List<GopYKhachHang>();
 }

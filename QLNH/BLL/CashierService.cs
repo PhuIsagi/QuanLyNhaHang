@@ -8,6 +8,7 @@ namespace QLNH.BLL
     {
         public int ma_hoa_don { get; set; }
         public decimal tong_thanh_toan { get; set; }
+        public decimal tong_tien_hang { get; set; }
         public decimal tien_khach_dua { get; set; }
         public decimal giam_gia { get; set; }
         public string? phuong_thuc { get; set; }
@@ -38,7 +39,17 @@ namespace QLNH.BLL
 
             decimal tamTinh = items.Sum(i => i.thanh_tien ?? 0);
             decimal vat = tamTinh * 0.1m;
-            decimal giamGia = hoadon.GiamGia ?? 0;
+
+            decimal giamGia = 0;
+            if (tamTinh >= 1000000)
+            {
+                giamGia = tamTinh * 0.10m;
+            }
+            else if (tamTinh >= 500000)
+            {
+                giamGia = tamTinh * 0.05m;
+            }
+
             decimal tongThanhToan = tamTinh + vat - giamGia;
             int tongSoLuong = items.Sum(i => i.so_luong ?? 0);
 
@@ -62,17 +73,25 @@ namespace QLNH.BLL
 
         public async Task<object> ProcessCheckoutAsync(CheckoutRequestDto request)
         {
-            bool result = await _repo.ThanhToanAsync(
-                request.ma_hoa_don,
-                request.tong_thanh_toan,
-                request.tien_khach_dua,
-                request.giam_gia,
-                request.phuong_thuc ?? "Tiền mặt");
+            try
+            {
+                decimal vatCalculate = request.tong_tien_hang * 0.1m;
 
-            if (result)
+                await _repo.ThanhToanAsync(
+                    request.ma_hoa_don,
+                    request.tong_thanh_toan,
+                    request.tong_tien_hang,
+                    request.tien_khach_dua,
+                    request.giam_gia,
+                    vatCalculate,
+                    request.phuong_thuc ?? "Tiền mặt");
+
                 return new { success = true, msg = "Thanh toán thành công" };
-
-            return new { success = false, msg = "Lỗi xử lý thanh toán" };
+            }
+            catch (System.Exception ex)
+            {
+                return new { success = false, msg = "Lỗi xử lý thanh toán: " + ex.Message };
+            }
         }
     }
 }

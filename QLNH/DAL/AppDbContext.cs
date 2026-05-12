@@ -17,23 +17,14 @@ public partial class AppDbContext : DbContext
     }
 
     public virtual DbSet<Banan> Banans { get; set; }
-
     public virtual DbSet<Chitiethoadon> Chitiethoadons { get; set; }
-
     public virtual DbSet<Chitietphieugoi> Chitietphieugois { get; set; }
-
     public virtual DbSet<Hoadon> Hoadons { get; set; }
-
     public virtual DbSet<Monan> Monans { get; set; }
-
     public virtual DbSet<Nhanvien> Nhanviens { get; set; }
-
     public virtual DbSet<Nhommon> Nhommons { get; set; }
-
     public virtual DbSet<Phieugoi> Phieugois { get; set; }
-
     public virtual DbSet<Thongbao> Thongbaos { get; set; }
-
     public virtual DbSet<GopYKhachHang> GopYKhachHangs { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -214,6 +205,32 @@ public partial class AppDbContext : DbContext
             entity.Property(e => e.ThoiGian)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
+
+            entity.HasOne(d => d.SoBanNavigation)
+                  .WithMany(p => p.Thongbaos)
+                  .HasForeignKey(d => d.SoBan)
+                  .HasConstraintName("FK_Thongbao_Banan")
+                  .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<GopYKhachHang>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.ToTable("GopYKhachHang");
+
+            // Cấu hình thuộc tính
+            entity.Property(e => e.TenKhachHang).HasMaxLength(100);
+            entity.Property(e => e.NoiDungGopY).HasMaxLength(500);
+            entity.Property(e => e.NgayGopY)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+
+            // Khóa ngoại nối bảng GopYKhachHang với Hoadon
+            entity.HasOne(d => d.MaHoaDonNavigation)
+                  .WithMany(p => p.GopYKhachHangs)
+                  .HasForeignKey(d => d.MaHoaDon)
+                  .HasConstraintName("FK_GopYKhachHang_Hoadon")
+                  .OnDelete(DeleteBehavior.SetNull);
         });
 
         OnModelCreatingPartial(modelBuilder);

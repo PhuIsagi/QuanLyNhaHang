@@ -213,7 +213,8 @@ namespace QLNH.Migrations
                         SELECT 
                             N'Bàn ' + CAST(h.SoBan AS NVARCHAR(10)) + N': ' + m.TenMon + N' đã nấu xong!', 
                             0, 
-                            GETDATE()
+                            GETDATE(),
+                            h.SoBan
                         FROM inserted i 
                         JOIN deleted d ON i.ID = d.ID 
                         JOIN monan m ON i.MaMon = m.MaMon

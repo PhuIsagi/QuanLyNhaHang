@@ -116,10 +116,23 @@ namespace QLNH.DAL.Repositories
                 await _context.SaveChangesAsync();
             }
         }
-
-        public async Task<object> LayThongBaoAsync()
+        public async Task ThemGopYKhachHangAsync(GopYKhachHang gopy)
         {
-            return await _context.Thongbaos.Where(t => t.DaXem == false).ToListAsync();
+            _context.GopYKhachHangs.Add(gopy);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<object> LayThongBaoAsync(int soBan)
+        {
+            return await _context.Thongbaos
+                .Where(t => t.DaXem == false && t.SoBan == soBan)
+                .OrderByDescending(t => t.ThoiGian)
+                .Select(t => new {
+                    maTb = t.MaTb,
+                    noiDung = t.NoiDung,
+                    thoiGian = t.ThoiGian
+                })
+                .ToListAsync();
         }
     }
 }

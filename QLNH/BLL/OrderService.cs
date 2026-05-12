@@ -18,6 +18,9 @@ namespace QLNH.BLL
         public async Task<bool> XuLyDatMonAsync(OrderDto orderRequest, int maNV)
         {
             string jsonItems = JsonSerializer.Serialize(orderRequest.items);
+
+
+
             return await _repository.TaoDonHangAsync(orderRequest.so_ban, maNV, jsonItems);
         }
 
@@ -42,10 +45,15 @@ namespace QLNH.BLL
             await _repository.CapNhatTrangThaiMonAsync(request);
         }
 
-
-        public async Task<object> GetThongBaoChuaXemAsync()
+        public async Task XuLyGopYAsync(GopYKhachHang gopy)
         {
-            return await _repository.LayThongBaoAsync();
+            gopy.NgayGopY = DateTime.Now;
+            await _repository.ThemGopYKhachHangAsync(gopy);
+        }
+
+        public async Task<object> GetThongBaoChuaXemAsync(int soBan)
+        {
+            return await _repository.LayThongBaoAsync(soBan);
         }
     }
 }

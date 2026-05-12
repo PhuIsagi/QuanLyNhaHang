@@ -54,11 +54,21 @@ namespace QLNH.Controllers
             }
         }
 
-        [HttpGet("get-notifications")]
-        public async Task<IActionResult> GetNotifications()
+        [HttpGet("thong-bao/{soBan}")]
+        public async Task<IActionResult> GetThongBao(int soBan)
         {
-            var notis = await _orderService.GetThongBaoChuaXemAsync();
-            return Ok(notis);
+            var result = await _orderService.GetThongBaoChuaXemAsync(soBan);
+            return Ok(result);
+        }
+
+        [HttpPost("gop-y")]
+        public async Task<IActionResult> NhanGopYKhachHang([FromBody] GopYKhachHang request)
+        {
+            if (request.MaHoaDon == null || request.SoSaoDanhGia < 1)
+                return BadRequest(new { success = false, message = "Dữ liệu không hợp lệ!" });
+
+            await _orderService.XuLyGopYAsync(request);
+            return Ok(new { success = true, message = "Cảm ơn quý khách đã để lại đánh giá!" });
         }
     }
 
