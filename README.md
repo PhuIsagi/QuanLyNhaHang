@@ -19,3 +19,14 @@ Hệ thống áp dụng kiến trúc 3 lớp:
 1. **Presentation Layer (`Controllers`):** Chứa các Web API (RESTful), nhận và trả dữ liệu JSON.
 2. **Business Logic Layer (`BLL` / `Services`):** Xử lý quy tắc nghiệp vụ, tính toán doanh thu, giờ chờ món.
 3. **Data Access Layer (`DAL` / `Repositories`):** Tương tác trực tiếp với SQL Server.
+
+## Hướng Dẫn Cài Đặt & Triển Khai
+Sau khi git clone mã nguồn về máy tính, thực hiện các bước sau để thiết lập cơ sở dữ liệu cho hệ thống:
+
+Lấy file sao lưu: Truy cập vào thư mục gốc của dự án, tìm và mở thư mục mang tên Database, sau đó tìm tệp tin sao lưu dữ liệu QuanLyNhaHang.bak.
+
+Khôi phục trên SSMS: Khởi động công cụ Microsoft SQL Server Management Studio (SSMS).
+
+Thao tác Restore: Nhấp chuột phải vào mục Databases trong cửa sổ Object Explorer, chọn Restore Database..., điều hướng đường dẫn đến tệp tin QuanLyNhaHang.bak.
+
+Tra cứu tài khoản đăng nhập: Sau khi quá trình khôi phục thành công, thực hiện mở và truy vấn bảng dữ liệu nhanvien trực tiếp dưới SQL Server để kiểm tra thông tin danh sách tài khoản, vai trò (PhucVu, Bep, ThuNgan, QuanLy) và mật khẩu tương ứng dùng để đăng nhập.
