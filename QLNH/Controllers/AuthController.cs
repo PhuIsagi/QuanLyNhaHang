@@ -34,7 +34,7 @@ namespace QLNH.Controllers
                 return Ok(new
                 {
                     success = false,
-                    message = "Lỗi C# đây Phú ơi: " + errorMsg
+                    message = "Lỗi: " + errorMsg
                 });
             }
         }
