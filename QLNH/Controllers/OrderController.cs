@@ -25,7 +25,7 @@ namespace QLNH.Controllers
             {
                 if (request.ma_nv <= 0)
                 {
-                    return Ok(new { success = false, msg = "Lỗi: Không tìm thấy thông tin nhân viên, vui lòng đăng nhập lại!" });
+                    return Ok(new { success = false, msg = "Không tìm thấy thông tin nhân viên, vui lòng đăng nhập lại!" });
                 }
 
                 await _orderService.XuLyDatMonAsync(request, request.ma_nv);

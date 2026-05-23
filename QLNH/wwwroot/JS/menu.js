@@ -80,7 +80,6 @@ window.submitOrder = function () {
     if (!tableValue) return alert("Vui lòng chọn bàn trước!");
     if (Object.keys(cart).length === 0) return alert("Đơn hàng trống, vui lòng chọn món!");
 
-    // Ép kiểu so_ban về dạng số nguyên (int)
     const tableId = parseInt(tableValue, 10);
 
     const userInfoRaw = localStorage.getItem('userInfo');
@@ -88,10 +87,9 @@ window.submitOrder = function () {
 
     if (userInfoRaw) {
         const userInfo = JSON.parse(userInfoRaw);
-        currentMaNV = parseInt(userInfo.maNV, 10) || 0; // Đảm bảo maNV cũng là số
+        currentMaNV = parseInt(userInfo.maNV, 10) || 0;
     }
 
-    // Map dữ liệu từ giỏ hàng, đảm bảo các trường id, quantity, price đúng kiểu số
     const items = Object.entries(cart).map(([id, item]) => ({
         id: parseInt(id, 10),
         quantity: parseInt(item.qty, 10),
@@ -116,7 +114,7 @@ window.submitOrder = function () {
         .then(data => {
             if (data.success) {
                 alert("" + data.msg);
-                window.location.href = "/layout/table_list.html"; // Trỏ đúng đường dẫn giao diện nếu cần
+                window.location.href = "/layout/table_list.html";
             } else {
                 alert("Lỗi: " + data.msg);
             }
