@@ -1,0 +1,7 @@
+# Use this workspace to collaborate
+workspace:
+  id: 0af88961-dbb3-40c2-8c61-ae4c5c2308a2
+
+localResources:
+  specs:
+    - ..\QLNH\obj\Debug\net8.0\EndpointInfo\QLNH.json

@@ -75,28 +75,48 @@ window.searchDish = function () {
 };
 
 window.submitOrder = function () {
-    const tableId = document.getElementById('selectedTable').value;
+    const tableValue = document.getElementById('selectedTable').value;
 
-    if (!tableId) return alert("Vui lòng chọn bàn trước!");
+    if (!tableValue) return alert("Vui lòng chọn bàn trước!");
     if (Object.keys(cart).length === 0) return alert("Đơn hàng trống, vui lòng chọn món!");
 
+    // Ép kiểu so_ban về dạng số nguyên (int)
+    const tableId = parseInt(tableValue, 10);
+
+    const userInfoRaw = localStorage.getItem('userInfo');
+    let currentMaNV = 0;
+
+    if (userInfoRaw) {
+        const userInfo = JSON.parse(userInfoRaw);
+        currentMaNV = parseInt(userInfo.maNV, 10) || 0; // Đảm bảo maNV cũng là số
+    }
+
+    // Map dữ liệu từ giỏ hàng, đảm bảo các trường id, quantity, price đúng kiểu số
     const items = Object.entries(cart).map(([id, item]) => ({
-        id: id,
-        quantity: item.qty,
-        price: item.price,
-        note: item.note
+        id: parseInt(id, 10),
+        quantity: parseInt(item.qty, 10),
+        price: parseFloat(item.price),
+        note: item.note || ""
     }));
+
+
+    const orderPayload = {
+        so_ban: tableId,
+        ma_nv: currentMaNV,
+        items: items
+    };
+    console.log("Dữ liệu chuẩn bị gửi đi:", orderPayload);
 
     fetch('/api/luu-don-hang', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ so_ban: tableId, items: items })
+        body: JSON.stringify(orderPayload)
     })
         .then(r => r.json())
         .then(data => {
             if (data.success) {
                 alert("" + data.msg);
-                window.location.href = "/table-list";
+                window.location.href = "/layout/table_list.html"; // Trỏ đúng đường dẫn giao diện nếu cần
             } else {
                 alert("Lỗi: " + data.msg);
             }

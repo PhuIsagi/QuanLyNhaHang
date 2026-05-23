@@ -23,8 +23,12 @@ namespace QLNH.Controllers
         {
             try
             {
-                int maNVHienTai = 3;
-                await _orderService.XuLyDatMonAsync(request, maNVHienTai);
+                if (request.ma_nv <= 0)
+                {
+                    return Ok(new { success = false, msg = "Lỗi: Không tìm thấy thông tin nhân viên, vui lòng đăng nhập lại!" });
+                }
+
+                await _orderService.XuLyDatMonAsync(request, request.ma_nv);
                 return Ok(new { success = true, msg = "Đã gửi bếp thành công!" });
             }
             catch (Exception ex)

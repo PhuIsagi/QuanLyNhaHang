@@ -28,7 +28,7 @@ namespace QLNH.Controllers
                 string errorMsg = ex.Message;
                 if (ex.InnerException != null)
                 {
-                    errorMsg += " | Chi tiết: " + ex.InnerException.Message;
+                    errorMsg += "Chi tiết: " + ex.InnerException.Message;
                 }
 
                 return Ok(new

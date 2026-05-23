@@ -22,12 +22,21 @@
             })
                 .then(response => response.json())
                 .then(data => {
+                    console.log("Dữ liệu Server gửi về:", data);
                     if (data.success) {
+                        const maNhanVien = data.maNV || data.maNv || data.manv || data.MaNV || data.MaNv;
+
                         localStorage.setItem('userInfo', JSON.stringify({
-                            fullname: data.fullName,
-                            role: data.role,
-                            avatar: data.avatar
+                            fullname: data.fullName || data.fullname || "User",
+                            role: data.role || data.Role || "PhucVu",
+                            avatar: data.avatar || "",
+                            maNV: maNhanVien
                         }));
+
+                        console.log("Đã lưu vào bộ nhớ:", {
+                            fullname: data.fullName,
+                            maNV: maNhanVien
+                        });
 
                         window.location.href = data.redirectUrl;
                     } else {

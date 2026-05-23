@@ -13,6 +13,7 @@ namespace QLNH.Models
     public class OrderDto
     {
         public int so_ban { get; set; }
+        public int ma_nv { get; set; }
         public List<OrderItemDto>? items { get; set; }
     }
 }
